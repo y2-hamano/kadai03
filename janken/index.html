@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- リセットcss読み込み -->
+    <link rel="stylesheet" href="css/reset.css">
+    <!-- style.css読み込み -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- jquery読み込み -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <title>ジャンケンゲーム</title>
+</head>
+<body>
+    <!-- タイトルエリア -->
+    <div class="main">
+        <h1 class="title">ジャンケンゲーム</h1>
+    </div>
+
+    <!-- 結果表示エリア -->
+    <div class="result">
+       <h2 class="text"></h2>
+       <p class="result-img"><img src="images/yobikake.png" alt=""></p>
+       <!-- <p class="result-img"></p> -->
+       <div class="result-text"></div>
+     
+       <!-- <div id="resetButton" class="hidden">もう一回勝負する</div>   -->
+       <!-- <input type="Reloadbtn" value="もう一回勝負" onclick="window.location.reload();" /> -->
+    </div>
+
+    <!-- 入力エリア -->
+    <div class="my-hand">
+        <ul class="hand-list"> 
+            <li id="gu" class="hand" value="1"><p><img class="hand-img" src="images/gu.png" alt=""></p></li>
+            <li id="choki" class="hand" value="2"><p><img class="hand-img" src="images/choki.png" alt=""></p></li>
+            <li id="pa" class="hand" value="3"><p><img class="hand-img" src="images/pa.png" alt=""></p></li>
+        </ul>
+    </div>
+
+<!-- ここからjs -->
+<script>
+    //  ①-1ボタンを押下した場合に実行されるイベント
+    $(".hand").on('click',function(){
+        console.log("クリックOK");
+
+    //  ①-2押下したボタンの値を取得
+    //   今回ボタンが複数存在するため、$(this)を使うことで一つずつ宣言しなくてもよくなる　this は メタモン的存在 
+        let btndata = $(this).val();
+        //console.log("値取得OK");
+
+    //  ①-3 0~2の数字をランダムに生成する処理
+        let num = Math.floor( Math.random()*3 );
+        //console.log("ランダムOK");
+
+    // ☆一旦結果を確認☆
+        const Results = [btndata,num,btndata-num];
+        console.log(Results);
+
+    //     RESET_BUTTON.addEventListener("click",()=>{ //リセットボタンが押された時の処理
+    //     this.init();
+    //   });
+
+
+    //  ①-4 ランダム取得の画像を表示
+        $('.text').html('相手が出したのは');
+
+        if( num == 0 ){
+            $('.result-img').html('<img src="images/gu.png" alt="">');
+        }else if( num == 1){
+            $('.result-img').html('<img src="images/choki.png" alt="">'); 
+        }else if( num == 2){
+            $('.result-img').html('<img src="images/pa.png" alt="">');
+        }
+
+    //  ①-５ 条件分岐を作成
+    //  ランダム(0,1,2) と ボタン(1,2,3)   
+    //  (0,1),(1,2),(2,3)のときあいこ　(0,2)(1,3)(2,1)のとき負け　(0,3)(1,1)(2,2)のとき勝ち     
+        if( btndata - num == 1 ){
+            $('.result-text').html('あいこで...');
+        }else if( btndata - num == 2| btndata - num == -1 ){
+            $('.result-text').html('あなたの負け');
+        }else if( btndata - num == 0| btndata - num == 3){
+            $('.result-text').html('あなたの勝ち');
+     }
+    })
+
+</script>
+</body>
+</html>
